@@ -1,0 +1,57 @@
+.smms-container {
+    display: none;
+}
+
+.smms-message {
+    background: #fff;
+    border-left: 4px solid #fff;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    margin: 5px 15px 2px;
+    padding: 1px 12px;
+    border-left-color: #46b450;
+}
+
+.smms-image {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    float: left;
+    background-color: #444;
+    cursor: pointer;
+    list-style: none;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: inset 0 0 15px rgba(0,0,0,.1), inset 0 0 0 1px rgba(0,0,0,.05);
+    background: #eee;
+    cursor: pointer;
+}
+
+.smms-image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+#smms-file-list ul {
+    width: 81%;
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    right: 10%;
+    bottom: 0;
+    overflow: auto;
+    outline: 0;
+    padding: 2px 8px 8px;
+    margin: 0;
+}
+#smms-file-list ul li {
+    position: relative;
+    float: left;
+    padding: 8px;
+    margin: 0;
+    color: #444;
+    cursor: pointer;
+    list-style: none;
+    box-sizing: border-box;
+}
