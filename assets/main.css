@@ -10,7 +10,11 @@
     padding: 1px 12px;
     border-left-color: #46b450;
 }
-
+.smms-uploader-inline-content{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+}
 .smms-image {
     width: 150px;
     height: 150px;

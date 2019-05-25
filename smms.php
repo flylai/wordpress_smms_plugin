@@ -86,8 +86,7 @@ function smms_modal()
                     </ul>
                 </div>
                 <div class="uploader-inline" id="smms-uploader">
-                    <div class="uploader-inline-content">
-
+                    <div class="smms-uploader-inline-content">
                         <input type="file" name="filename" id="smms-upload-btn" multiple="multiple" />
                     </div>
                 </div>
@@ -110,6 +109,10 @@ function smms_modal()
             </div>
             <div class="media-frame-toolbar">
                 <div class="media-toolbar">
+                    <div class="media-toolbar-secondary">
+                        <div class="media-selection smms-insert-message">
+                        </div>
+                    </div>
                     <div class="media-toolbar-primary search-form">
                         <button type="button"
                             class="button media-button button-primary button-large media-button-insert"

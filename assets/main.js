@@ -54,6 +54,7 @@ jQuery(document).ready(function ($) {
     // 插入至文章
     $("#smms-insert-to-post").click(function () {
         $("html").find("iframe").contents().find("body").append('<img class="alignnone size-full wp-image-177" src="' + image_url + '" />');
+        $(".smms-insert-message").html('<div class="updated"><p>已插入文章~~</p></div>').show(300).delay(3000).hide(300);
     });
     // 删除图片
     $("#smms-delete").click(function () {
