@@ -98,19 +98,24 @@ jQuery(document).ready(function ($) {
                 contentType: false,
                 data: formData,
                 success: function (remote_res) {
-                    // 结果发送到后端
-                    var data = { 'action': 'smms_route', 'do': 'upload', 'smms-upload-result': remote_res };
-                    $.ajax({
-                        url: ajaxurl,
-                        type: 'POST',
-                        data: data,
-                        success: function (local_res) {
-                            if (local_res == 'success') {
-                                $("#smms-upload-btn").val('');
-                                $(".smms-message").html("<p>图片 " + remote_res.data.filename + " 上传成功~~~</P>").show(300).delay(3000).hide(300);
+                    if (remote_res.code != 'success') {
+                        $(".smms-message").html("<p>图片 " + $("#smms-upload-btn").val() + " 上传失败，错误信息：<strong>" + remote_res.msg + "</strong></P>").show(300).delay(5000).hide(300);
+                        $("#smms-upload-btn").val('');
+                    } else {
+                        // 结果发送到后端
+                        var data = { 'action': 'smms_route', 'do': 'upload', 'smms-upload-result': remote_res };
+                        $.ajax({
+                            url: ajaxurl,
+                            type: 'POST',
+                            data: data,
+                            success: function (local_res) {
+                                if (local_res == 'success') {
+                                    $("#smms-upload-btn").val('');
+                                    $(".smms-message").html("<p>图片 " + remote_res.data.filename + " 上传成功~~~</P>").show(300).delay(3000).hide(300);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             })
         }
