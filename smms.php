@@ -25,7 +25,6 @@ function smms_authentication()
 }
 
 // 功能启用
-$smms_settings = get_option('SMMS_OPTION');
 
 function smms_install()
 {
@@ -62,7 +61,7 @@ function smms_modal()
         return;
     }
     $smms_settings = get_option('SMMS_OPTION');
-    echo "<script>var smms_server_domain = 'https://{$smms_settings['smms_server_domain']}';</script>"; ?>
+    echo "<script>var smms_server_domain = 'https://{$smms_settings['smms_server_domain']}'; var smms_secret_token = '{$smms_settings['smms_secret_token']}'; </script>"; ?>
 <div class="smms-container">
     <div class="media-modal wp-core-ui">
         <button type="button" id="smms-modal-close" class="media-modal-close"><span class="media-modal-icon"><span
@@ -87,7 +86,12 @@ function smms_modal()
                 </div>
                 <div class="uploader-inline" id="smms-uploader">
                     <div class="smms-uploader-inline-content">
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>时间格式</span></legend>
+                        <label><input type="radio" id="smms_upload_method_v1" name="smms_upload_method" value="v1" checked="checked"><span>无token</span></label>
+                        <label><input type="radio" id="smms_upload_method_v2" name="smms_upload_method" value="v2"><span>token</span></label>
                         <input type="file" name="filename" id="smms-upload-btn" multiple="multiple" />
+	                </fieldset>
                     </div>
                 </div>
                 <div class="media-sidebar smms-detail">
@@ -167,7 +171,8 @@ function smms_options()
     $smms_settings = get_option('SMMS_OPTION'); //获取选项
     if ($smms_settings == '') {
         $smms_settings = array( //设置默认数据
-            'smms_server_domain' => 'i.loli.net'
+            'smms_server_domain' => 'i.loli.net',
+            'smms_secret_token' => ''
         );
         update_option('SMMS_OPTION', $smms_settings); //更新选项
     }
@@ -185,6 +190,7 @@ function smms_image_options()
     if (isset($_POST['smms_save'])) {
         $smms_settings = array(
             'smms_server_domain' => trim(@$_POST['smms_server_domain']),
+            'smms_secret_token' => trim(@$_POST['smms_secret_token'])
         );
         @update_option('SMMS_OPTION', $smms_settings);
         echo '<div class="updated" id="message"><p>已保存~~~!</p></div>';
@@ -193,6 +199,7 @@ function smms_image_options()
 <div class="wrap">
     <h1>SMMS图床工具-设置</h1>
     <p>SMMS图床工具可以在文章编辑界面上传图片至sm.ms图床，并插入文章</p>
+    <p>Secret Token是SMMS账户的识别码，使用token上传的图片会归入你在SMMS的账户下</p>
     <form method="post">
         <table class="form-table">
             <tbody>
@@ -202,8 +209,16 @@ function smms_image_options()
                         <label>
                             <select name="smms_server_domain">
                                 <option value="i.loli.net">i.loli.net</option>
-                                <option value="ooo.0o0.ooo">ooo.0o0.ooo</option>
+                                <!-- <option value="ooo.0o0.ooo">ooo.0o0.ooo</option> smms目前不支持自选域名-->
                             </select>
+                        </label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">Secret Token</th>
+                    <td>
+                        <label>
+                            <input name="smms_secret_token" type="text" value="<?php echo $smms_settings['smms_secret_token']; ?>" class="regular-text code"/>
                         </label>
                     </td>
                 </tr>

@@ -88,20 +88,44 @@ jQuery(document).ready(function ($) {
     });
     // 上传到smms
     $('#smms-upload-btn').change(function () {
+        var formData = new FormData();
         for (var i = 0; i < this.files.length; i++) {
             var f = this.files[i];
-            var formData = new FormData();
             formData.append('smfile', f);
+        }
+        if ($('#smms_upload_method_v2').attr('checked') == 'checked') {
+            formData.append('action', 'smms_route');
+            formData.append('do', 'upload_v2');
+            formData.append('upload', 'v2');
             $.ajax({
-                url: 'https://sm.ms/api/upload',
+                url: ajaxurl,
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                data: formData,
+                success: function (local_res) {
+                    $("#smms-upload-btn").val('');
+                    if (local_res == 'failed') {
+                        $(".smms-message").html("<p>图片上传失败，内部错误</p>").show(300).delay(3000).hide(300);
+                    } else if (local_res.code == 'success') {
+                        $(".smms-message").html("<p>图片 " + local_res.data.filename + " 上传成功~~~</p>").show(300).delay(3000).hide(300);
+                    } else {
+                        $(".smms-message").html("<p>图片 " + $("#smms-upload-btn").val() + " 上传失败，错误信息：<strong>" + local_res.message + "</strong></p>").show(300).delay(5000).hide(300);
+                    }
+                }
+            });
+        } else {
+            $.ajax({
+                url: 'https://sm.ms/api/v2/upload',
                 type: 'POST',
                 processData: false,
                 contentType: false,
                 data: formData,
                 success: function (remote_res) {
+                    $("#smms-upload-btn").val('');
                     if (remote_res.code != 'success') {
-                        $(".smms-message").html("<p>图片 " + $("#smms-upload-btn").val() + " 上传失败，错误信息：<strong>" + remote_res.msg + "</strong></P>").show(300).delay(5000).hide(300);
-                        $("#smms-upload-btn").val('');
+                        $(".smms-message").html("<p>图片 " + $("#smms-upload-btn").val() + " 上传失败，错误信息：<strong>" + remote_res.message + "</strong></p>").show(300).delay(5000).hide(300);
                     } else {
                         // 结果发送到后端
                         var data = { 'action': 'smms_route', 'do': 'upload', 'smms-upload-result': remote_res };
@@ -111,14 +135,13 @@ jQuery(document).ready(function ($) {
                             data: data,
                             success: function (local_res) {
                                 if (local_res == 'success') {
-                                    $("#smms-upload-btn").val('');
-                                    $(".smms-message").html("<p>图片 " + remote_res.data.filename + " 上传成功~~~</P>").show(300).delay(3000).hide(300);
+                                    $(".smms-message").html("<p>图片 " + remote_res.data.filename + " 上传成功~~~</p>").show(300).delay(3000).hide(300);
                                 }
                             }
                         });
                     }
                 }
-            })
+            });
         }
     });
 
