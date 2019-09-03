@@ -5,7 +5,7 @@ Plugin URI: https://flylai.com/587.html
 Description: 通过使用SM.MS的API，支持在文章编辑时上传插入管理图片。
 Author: flylai
 Author URI: https://flylai.com/
-Version: 1.0
+Version: 1.1
 */
 
 
