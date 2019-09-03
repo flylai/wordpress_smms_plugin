@@ -74,6 +74,7 @@ function smms_upload_image_v2()
             smms_insert_db(json_decode($results, true));
             echo $results;
             curl_close($ch);
+            unlink($upload_file);
         } else {
             echo 'failed';
         }
