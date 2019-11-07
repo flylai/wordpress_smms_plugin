@@ -53,7 +53,12 @@ jQuery(document).ready(function ($) {
     });
     // 插入至文章
     $("#smms-insert-to-post").click(function () {
-        $("html").find("iframe").contents().find("body").append('<img class="alignnone size-full wp-image-177" src="' + image_url + '" />');
+        if ($("#wp-content-wrap").attr('class').match('html-active') != null) {
+            var val = $(".wp-editor-area, #content").val() + '<img class="alignnone size-full wp-image-177" src="' + image_url + '" />';
+            $(".wp-editor-area, #content").val(val);
+        } else {
+            $("html").find("iframe").contents().find("body").append('<img class="alignnone size-full wp-image-177" src="' + image_url + '" />');
+        }
         $(".smms-insert-message").html('<div class="updated"><p>已插入文章~~</p></div>').show(300).delay(3000).hide(300);
     });
     // 删除图片
@@ -126,7 +131,6 @@ jQuery(document).ready(function ($) {
                 async: false,
                 data: formData,
                 success: function (remote_res) {
-                    $("#smms-upload-btn").val('');
                     if (remote_res.code != 'success') {
                         text = '图片 ' + $("#smms-upload-btn").val() + ' 上传失败，错误信息：<strong>' + remote_res.message + '</strong>';
                     } else {
@@ -143,6 +147,7 @@ jQuery(document).ready(function ($) {
                             }
                         });
                     }
+                    $("#smms-upload-btn").val('');
                 }
             });
         }
