@@ -140,6 +140,7 @@ jQuery(document).ready(function ($) {
                             url: ajaxurl,
                             type: 'POST',
                             data: data,
+                            async: false,
                             success: function (local_res) {
                                 if (local_res == 'success') {
                                     text = '图片 ' + remote_res.data.filename + ' 上传成功~~~';
