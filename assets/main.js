@@ -72,7 +72,7 @@ jQuery(document).ready(function ($) {
             url: ajaxurl,
             type: 'POST',
             data: data,
-            dataType: "text",
+            dataType: 'text',
             success: function (res) {
                 console.log(res);
                 if (res == 'success') {
@@ -130,6 +130,7 @@ jQuery(document).ready(function ($) {
                 contentType: false,
                 async: false,
                 data: formData,
+                dataType: 'json',
                 success: function (remote_res) {
                     if (remote_res.code != 'success') {
                         text = '图片 ' + $("#smms-upload-btn").val() + ' 上传失败，错误信息：<strong>' + remote_res.message + '</strong>';
